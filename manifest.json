@@ -1,0 +1,17 @@
+{
+  "name": "openboard",
+  "id": "artboard-selector",
+  "api": "0.1.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "capabilities": [],
+  "enableProposedApi": false,
+  "editorType": [
+    "figma"
+  ],
+  "networkAccess": {
+    "allowedDomains": [
+      "none"
+    ]
+  }
+}
