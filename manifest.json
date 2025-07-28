@@ -1,7 +1,7 @@
 {
   "name": "openboard",
   "id": "artboard-selector",
-  "api": "0.1.0",
+  "api": "1.0.0",
   "main": "code.js",
   "ui": "ui.html",
   "capabilities": [],
