@@ -1,2 +1,3 @@
-# openboard
-Figma Plugin | add missing artboard feature to Figma
+# openplugin-figma
+
+Adding missing artboard feature to Figma
