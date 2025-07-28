@@ -2,54 +2,444 @@
 <html>
 <head>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
       margin: 0;
-      padding: 20px;
-      background: white;
+      padding: 0;
+      background: #FFFFFF;
+      color: #1D1D1D;
+      font-size: 11px;
+      line-height: 16px;
+      -webkit-font-smoothing: antialiased;
     }
     
     .container {
+      padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      align-items: center;
+      gap: 16px;
+      min-height: 100vh;
     }
     
-    .instruction {
-      font-size: 14px;
-      color: #333;
+    .header {
       text-align: center;
-      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    
+    .title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1D1D1D;
+      margin: 0;
+      letter-spacing: -0.005em;
+    }
+    
+    .subtitle {
+      font-size: 11px;
+      color: #8C8C8C;
+      margin: 4px 0 0 0;
+      font-weight: 400;
+    }
+    
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
     
     .button {
       background: #18A0FB;
-      color: white;
+      color: #FFFFFF;
       border: none;
       border-radius: 6px;
-      padding: 8px 16px;
-      font-size: 14px;
-      cursor: pointer;
+      padding: 8px 12px;
+      font-size: 11px;
       font-weight: 500;
+      cursor: pointer;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+      font-family: inherit;
+      letter-spacing: -0.005em;
     }
     
     .button:hover {
-      background: #0F8BD9;
+      background: #0D7FCC;
+    }
+    
+    .button:active {
+      background: #0A6BB3;
+      transform: translateY(1px);
+    }
+    
+    .button:disabled {
+      background: #E5E5E5;
+      color: #8C8C8C;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .button-secondary {
+      background: #FFFFFF;
+      color: #333333;
+      border: 1px solid #E5E5E5;
+    }
+    
+    .button-secondary:hover {
+      background: #F5F5F5;
+      border-color: #CCCCCC;
+    }
+    
+    .button-secondary:active {
+      background: #EEEEEE;
+    }
+    
+    .input-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .input-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .input-label {
+      font-size: 11px;
+      color: #333333;
+      font-weight: 500;
+      min-width: 44px;
+      letter-spacing: -0.005em;
+    }
+    
+    .input-field {
+      border: 1px solid #CCCCCC;
+      border-radius: 4px;
+      padding: 6px 8px;
+      font-size: 11px;
+      background: #FFFFFF;
+      color: #1D1D1D;
+      height: 28px;
+      width: 64px;
+      font-family: inherit;
+      transition: border-color 0.15s ease;
+    }
+    
+    .input-field:focus {
+      outline: none;
+      border-color: #18A0FB;
+      box-shadow: 0 0 0 2px rgba(24, 160, 251, 0.2);
+    }
+    
+    .input-field::placeholder {
+      color: #8C8C8C;
+    }
+    
+    .preview-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .preview-header {
+      font-size: 11px;
+      font-weight: 500;
+      color: #333333;
+      letter-spacing: -0.005em;
+    }
+    
+    .preview-count {
+      color: #18A0FB;
+      font-weight: 600;
+    }
+    
+    .preview-list {
+      max-height: 120px;
+      overflow-y: auto;
+      border: 1px solid #E5E5E5;
+      border-radius: 4px;
+      background: #FBFBFB;
+    }
+    
+    .preview-item {
+      padding: 8px 12px;
+      font-size: 11px;
+      color: #333333;
+      border-bottom: 1px solid #F0F0F0;
+      line-height: 14px;
+    }
+    
+    .preview-item:last-child {
+      border-bottom: none;
+    }
+    
+    .preview-item .frame-name {
+      font-weight: 500;
+      color: #1D1D1D;
+    }
+    
+    .preview-item .dimensions {
+      color: #666666;
+      font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+      font-size: 10px;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .back-button {
+      background: none;
+      border: none;
+      color: #666666;
+      font-size: 11px;
+      padding: 4px 0;
+      cursor: pointer;
+      align-self: flex-start;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 8px;
+      font-family: inherit;
+      transition: color 0.15s ease;
+    }
+    
+    .back-button:hover {
+      color: #333333;
+    }
+    
+    .back-icon {
+      width: 12px;
+      height: 12px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+    
+    .divider {
+      height: 1px;
+      background: #E5E5E5;
+      margin: 8px 0;
+    }
+    
+    /* Custom scrollbar */
+    .preview-list::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    .preview-list::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    .preview-list::-webkit-scrollbar-thumb {
+      background: #CCCCCC;
+      border-radius: 2px;
+    }
+    
+    .preview-list::-webkit-scrollbar-thumb:hover {
+      background: #999999;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="instruction">
-      Select a frame to use as artboard reference, then click the button below.
+    <!-- Step 1: Initial buttons -->
+    <div id="step-buttons">
+      <div class="header">
+        <h1 class="title">Artboard Tools</h1>
+        <p class="subtitle">Find and correct artboard dimensions</p>
+      </div>
+      <div class="button-group">
+        <button class="button" id="find-button">Find Similar Artboards</button>
+        <button class="button button-secondary" id="correct-button">Correct Artboard Size</button>
+      </div>
     </div>
-    <button class="button" id="find-button">Find Similar Artboards</button>
+
+    <!-- Step 2: Selection instruction -->
+    <div id="step-selection" class="hidden">
+      <button class="back-button" id="back-to-start">
+        <svg class="back-icon" viewBox="0 0 24 24">
+          <path d="M19 12H5m7-7l-7 7 7 7"/>
+        </svg>
+        Back
+      </button>
+      <div class="header">
+        <h2 class="title">Select Reference Frame</h2>
+        <p class="subtitle">Choose a frame to find similar dimensions</p>
+      </div>
+      <button class="button" id="continue-button">Continue</button>
+    </div>
+
+    <!-- Step 3: Dimension inputs -->
+    <div id="step-inputs" class="hidden">
+      <button class="back-button" id="back-to-selection">
+        <svg class="back-icon" viewBox="0 0 24 24">
+          <path d="M19 12H5m7-7l-7 7 7 7"/>
+        </svg>
+        Back
+      </button>
+      <div class="header">
+        <h2 class="title">New Dimensions</h2>
+        <p class="subtitle">Enter the correct size for your artboards</p>
+      </div>
+      <div class="input-section">
+        <div class="input-group">
+          <div class="input-row">
+            <span class="input-label">Width</span>
+            <input type="number" class="input-field" id="width-input" placeholder="375">
+            <span style="font-size: 10px; color: #8C8C8C;">px</span>
+          </div>
+          <div class="input-row">
+            <span class="input-label">Height</span>
+            <input type="number" class="input-field" id="height-input" placeholder="812">
+            <span style="font-size: 10px; color: #8C8C8C;">px</span>
+          </div>
+        </div>
+        <button class="button" id="preview-button">Preview Changes</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Preview and confirm -->
+    <div id="step-preview" class="hidden">
+      <button class="back-button" id="back-to-inputs">
+        <svg class="back-icon" viewBox="0 0 24 24">
+          <path d="M19 12H5m7-7l-7 7 7 7"/>
+        </svg>
+        Back
+      </button>
+      <div class="header">
+        <h2 class="title">Preview Changes</h2>
+        <p class="subtitle">Review frames before applying</p>
+      </div>
+      <div class="preview-section">
+        <div class="preview-header">
+          <span class="preview-count" id="preview-count">0</span> frames will be resized:
+        </div>
+        <div class="preview-list" id="preview-list"></div>
+        <button class="button" id="apply-button">Apply Changes</button>
+      </div>
+    </div>
   </div>
 
   <script>
+    let currentMode = '';
+    let referenceFrame = null;
+    let matchingFrames = [];
+
+    // Navigation functions
+    function showStep(stepId) {
+      ['step-buttons', 'step-selection', 'step-inputs', 'step-preview'].forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+      document.getElementById(stepId).classList.remove('hidden');
+    }
+
+    // Step 1: Button handlers
     document.getElementById('find-button').onclick = () => {
       parent.postMessage({ pluginMessage: { type: 'find-similar-artboards' } }, '*');
+    };
+
+    document.getElementById('correct-button').onclick = () => {
+      currentMode = 'correct-sizes';
+      showStep('step-selection');
+    };
+
+    // Step 2: Selection handlers
+    document.getElementById('back-to-start').onclick = () => {
+      showStep('step-buttons');
+      currentMode = '';
+    };
+
+    document.getElementById('continue-button').onclick = () => {
+      parent.postMessage({ pluginMessage: { type: 'get-similar-frames' } }, '*');
+    };
+
+    // Step 3: Input handlers
+    document.getElementById('back-to-selection').onclick = () => {
+      showStep('step-selection');
+    };
+
+    document.getElementById('preview-button').onclick = () => {
+      const width = parseInt(document.getElementById('width-input').value);
+      const height = parseInt(document.getElementById('height-input').value);
+      
+      if (!width || !height) {
+        alert('Please enter valid dimensions');
+        return;
+      }
+      
+      parent.postMessage({ 
+        pluginMessage: { 
+          type: 'preview-resize', 
+          width: width, 
+          height: height 
+        } 
+      }, '*');
+    };
+
+    // Step 4: Preview handlers
+    document.getElementById('back-to-inputs').onclick = () => {
+      showStep('step-inputs');
+    };
+
+    document.getElementById('apply-button').onclick = () => {
+      const width = parseInt(document.getElementById('width-input').value);
+      const height = parseInt(document.getElementById('height-input').value);
+      
+      parent.postMessage({ 
+        pluginMessage: { 
+          type: 'apply-resize', 
+          width: width, 
+          height: height 
+        } 
+      }, '*');
+    };
+
+    // Listen for messages from plugin
+    window.onmessage = (event) => {
+      const { type, data } = event.data.pluginMessage || {};
+      
+      if (type === 'similar-frames-found') {
+        matchingFrames = data.frames;
+        referenceFrame = data.reference;
+        
+        // Populate input fields with current dimensions
+        document.getElementById('width-input').value = referenceFrame.width;
+        document.getElementById('height-input').value = referenceFrame.height;
+        
+        showStep('step-inputs');
+      } else if (type === 'preview-data') {
+        const { frames, newWidth, newHeight } = data;
+        
+        document.getElementById('preview-count').textContent = frames.length;
+        
+        const previewList = document.getElementById('preview-list');
+        previewList.innerHTML = frames.map(frame => 
+          `<div class="preview-item">
+            <div class="frame-name">${frame.name}</div>
+            <div class="dimensions">${frame.width}×${frame.height} → ${newWidth}×${newHeight}</div>
+          </div>`
+        ).join('');
+        
+        showStep('step-preview');
+      } else if (type === 'resize-complete') {
+        showStep('step-buttons');
+        currentMode = '';
+      }
     };
   </script>
 </body>
